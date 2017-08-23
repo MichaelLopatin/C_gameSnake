@@ -1,17 +1,17 @@
 
 #include <stdio.h>
-#include <windows.h>//для работы gotoxy
-#include <conio.h>//ввод вывод с клавиатуры
-#include <locale.h>//подключить русский язык
-#include <time.h>//для рандома
-#include <stdlib.h>//для рандома
+#include <windows.h>//РґР»СЏ СЂР°Р±РѕС‚С‹ gotoxy
+#include <conio.h>//РІРІРѕРґ РІС‹РІРѕРґ СЃ РєР»Р°РІРёР°С‚СѓСЂС‹
+#include <locale.h>//РїРѕРґРєР»СЋС‡РёС‚СЊ СЂСѓСЃСЃРєРёР№ СЏР·С‹Рє
+#include <time.h>//РґР»СЏ СЂР°РЅРґРѕРјР°
+#include <stdlib.h>//РґР»СЏ СЂР°РЅРґРѕРјР°
 
-#define FRAME_UP 2 //границы игрового поля
+#define FRAME_UP 2 //РіСЂР°РЅРёС†С‹ РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ
 #define FRAME_DOWN 20
 #define FRAME_LEFT 5
 #define FRAME_RIGHT 74
 
-#define ESC 27 //код рабочих клавиш
+#define ESC 27 //РєРѕРґ СЂР°Р±РѕС‡РёС… РєР»Р°РІРёС€
 #define ENTER 13
 #define UP 72
 #define DOWN 80
@@ -19,26 +19,26 @@
 #define RIGHT 77
 #define STUFF -32
 
-#define BEGIN_SNAKE_SZ 5 //начальная длина змейки
-#define MENU_SZ 4 //размер пунктов меню
-#define SPEED 200 //скорость движения змейки
-#define LEVEL_SPEED 3//скорость переключения уровней
+#define BEGIN_SNAKE_SZ 5 //РЅР°С‡Р°Р»СЊРЅР°СЏ РґР»РёРЅР° Р·РјРµР№РєРё
+#define MENU_SZ 4 //СЂР°Р·РјРµСЂ РїСѓРЅРєС‚РѕРІ РјРµРЅСЋ
+#define SPEED 200 //СЃРєРѕСЂРѕСЃС‚СЊ РґРІРёР¶РµРЅРёСЏ Р·РјРµР№РєРё
+#define LEVEL_SPEED 3//СЃРєРѕСЂРѕСЃС‚СЊ РїРµСЂРµРєР»СЋС‡РµРЅРёСЏ СѓСЂРѕРІРЅРµР№
 
-char menu_items[MENU_SZ][16] = { " Начать  игру ", "  Управление  ", "   Описание   ", "    Выход     " };//разделы меню
+char menu_items[MENU_SZ][16] = { " РќР°С‡Р°С‚СЊ  РёРіСЂСѓ ", "  РЈРїСЂР°РІР»РµРЅРёРµ  ", "   РћРїРёСЃР°РЅРёРµ   ", "    Р’С‹С…РѕРґ     " };//СЂР°Р·РґРµР»С‹ РјРµРЅСЋ
 
 
 void gotoxy(int x, int y);
 void settextattr(WORD attr);
 
-void food(int area[FRAME_RIGHT][FRAME_DOWN]);//ставит рандомно еду
-void game();//игра
-void control();//пункт меню "Управление"
-void description();//пункт меню "Описание"
+void food(int area[FRAME_RIGHT][FRAME_DOWN]);//СЃС‚Р°РІРёС‚ СЂР°РЅРґРѕРјРЅРѕ РµРґСѓ
+void game();//РёРіСЂР°
+void control();//РїСѓРЅРєС‚ РјРµРЅСЋ "РЈРїСЂР°РІР»РµРЅРёРµ"
+void description();//РїСѓРЅРєС‚ РјРµРЅСЋ "РћРїРёСЃР°РЅРёРµ"
 
-void border();//рисует бордюр
-void menu(int menuPos);//меню
-int xRand();//рандом x
-int yRand();//рандом y
+void border();//СЂРёСЃСѓРµС‚ Р±РѕСЂРґСЋСЂ
+void menu(int menuPos);//РјРµРЅСЋ
+int xRand();//СЂР°РЅРґРѕРј x
+int yRand();//СЂР°РЅРґРѕРј y
 
 void main()
 {
@@ -49,7 +49,7 @@ void main()
 	char key;
 
 
-	settextattr(BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY); //белый фон черные буквы
+	settextattr(BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY); //Р±РµР»С‹Р№ С„РѕРЅ С‡РµСЂРЅС‹Рµ Р±СѓРєРІС‹
 	system("cls");
 	border();
 	gotoxy(FRAME_LEFT, FRAME_UP);
@@ -78,16 +78,16 @@ void main()
 		}
 	}
 	gotoxy(FRAME_LEFT, FRAME_DOWN + 1);
-	settextattr(BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY);//белый фон черные буквы
+	settextattr(BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY);//Р±РµР»С‹Р№ С„РѕРЅ С‡РµСЂРЅС‹Рµ Р±СѓРєРІС‹
 }
 
 
 
 void game()
 {
-	//движение 1 - вправо, 2 - вниз, 3 - влево, 4 - вверх; 5 - еда
+	//РґРІРёР¶РµРЅРёРµ 1 - РІРїСЂР°РІРѕ, 2 - РІРЅРёР·, 3 - РІР»РµРІРѕ, 4 - РІРІРµСЂС…; 5 - РµРґР°
 	int area[FRAME_RIGHT][FRAME_DOWN] = { { 0 },{ 0 } };
-	int snakeLn = 0; // счетчик, показывает должно ли быть удлинение змеи
+	int snakeLn = 0; // СЃС‡РµС‚С‡РёРє, РїРѕРєР°Р·С‹РІР°РµС‚ РґРѕР»Р¶РЅРѕ Р»Рё Р±С‹С‚СЊ СѓРґР»РёРЅРµРЅРёРµ Р·РјРµРё
 	int i;
 	int score = 0;
 	int level = 1;
@@ -95,13 +95,13 @@ void game()
 	border();
 	settextattr(BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 	gotoxy(FRAME_LEFT + 3, FRAME_DOWN + 1);
-	printf("ESC - выход из игры");
+	printf("ESC - РІС‹С…РѕРґ РёР· РёРіСЂС‹");
 	gotoxy(10, 1);
-	printf("Уровень:", level);
+	printf("РЈСЂРѕРІРµРЅСЊ:", level);
 	gotoxy(18, 1);
 	printf("%2d", level);
 	gotoxy(50, 1);
-	printf("Cъедено печенек:", score);
+	printf("CСЉРµРґРµРЅРѕ РїРµС‡РµРЅРµРє:", score);
 	gotoxy(67, 1);
 	printf("%4d", score);
 	char key;
@@ -170,7 +170,7 @@ void game()
 
 		}
 
-		switch (area[xHead][yHead])//движение головы
+		switch (area[xHead][yHead])//РґРІРёР¶РµРЅРёРµ РіРѕР»РѕРІС‹
 		{
 		case 1:
 		{
@@ -228,13 +228,13 @@ void game()
 			area[xHead][yHead] = 4;
 			break;
 		}
-		default: printf("НЕ НЕ НЕ");
+		default: printf("РќР• РќР• РќР•");
 			break;
 		}
 		Sleep((SPEED - 20 * level) / 4);
 		if (snakeLn == 0)
 		{
-			switch (area[xTail][yTail])//движение хвоста
+			switch (area[xTail][yTail])//РґРІРёР¶РµРЅРёРµ С…РІРѕСЃС‚Р°
 			{
 			case 1:
 			{
@@ -268,7 +268,7 @@ void game()
 				yTail--;
 				break;
 			}
-			default: printf("Ай Яй Яй");
+			default: printf("РђР№ РЇР№ РЇР№");
 				break;
 			}
 
@@ -291,11 +291,11 @@ void game()
 	system("cls");
 	border();
 	gotoxy(10, 1);
-	printf("Уровень:");
+	printf("РЈСЂРѕРІРµРЅСЊ:");
 	gotoxy(18, 1);
 	printf("%2d", level);
 	gotoxy(50, 1);
-	printf("Cъедено печенек:");
+	printf("CСЉРµРґРµРЅРѕ РїРµС‡РµРЅРµРє:");
 	gotoxy(67, 1);
 	printf("%4d", score);
 	gotoxy((((FRAME_LEFT + FRAME_RIGHT) / 2) - 7), (((FRAME_DOWN + FRAME_UP) / 2) + FRAME_UP));
@@ -323,7 +323,7 @@ void food(int area[FRAME_RIGHT][FRAME_DOWN])
 {
 	int xFood = FRAME_LEFT + 1;
 	int yFood = FRAME_UP + 1;
-	do//ставит рандомно еду
+	do//СЃС‚Р°РІРёС‚ СЂР°РЅРґРѕРјРЅРѕ РµРґСѓ
 	{
 		int x, y;
 		x = xRand();
@@ -374,21 +374,21 @@ void control()
 	system("cls");
 	border();
 	gotoxy(32, 4);
-	printf("Управление:");
+	printf("РЈРїСЂР°РІР»РµРЅРёРµ:");
 	gotoxy(27, 5);
-	printf("ESC - выход из игры");
+	printf("ESC - РІС‹С…РѕРґ РёР· РёРіСЂС‹");
 	gotoxy(20, 6);
-	printf("стрелка вправо  %c  - движение вправо", 26);
+	printf("СЃС‚СЂРµР»РєР° РІРїСЂР°РІРѕ  %c  - РґРІРёР¶РµРЅРёРµ РІРїСЂР°РІРѕ", 26);
 	gotoxy(20, 7);
-	printf(" стрелка влево  %c  - движение влево", 27);
+	printf(" СЃС‚СЂРµР»РєР° РІР»РµРІРѕ  %c  - РґРІРёР¶РµРЅРёРµ РІР»РµРІРѕ", 27);
 	gotoxy(20, 8);
-	printf(" стрелка вверх  %c  - движение вверх", 24);
+	printf(" СЃС‚СЂРµР»РєР° РІРІРµСЂС…  %c  - РґРІРёР¶РµРЅРёРµ РІРІРµСЂС…", 24);
 	gotoxy(20, 9);
-	printf("  стрелка вниз  %c  - движение вниз", 25);
+	printf("  СЃС‚СЂРµР»РєР° РІРЅРёР·  %c  - РґРІРёР¶РµРЅРёРµ РІРЅРёР·", 25);
 	gotoxy(19, 18);
-	printf("Для выхода в главное меню нажмите любую ");
+	printf("Р”Р»СЏ РІС‹С…РѕРґР° РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ РЅР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ ");
 	gotoxy(28, 19);
-	printf("клавишу на клавиатуре.");
+	printf("РєР»Р°РІРёС€Сѓ РЅР° РєР»Р°РІРёР°С‚СѓСЂРµ.");
 	_getch();
 	system("cls");
 	border();
@@ -399,33 +399,33 @@ void description()
 	system("cls");
 	border();
 	gotoxy(32, 4);
-	printf("Описание игры");
+	printf("РћРїРёСЃР°РЅРёРµ РёРіСЂС‹");
 	gotoxy(32, 5);
-	printf("Игра \"Змейка\".");
+	printf("РРіСЂР° \"Р—РјРµР№РєР°\".");
 	gotoxy(17, 6);
-	printf("	Суть игры состоит в том, чтобы змейка съела ");
+	printf("	РЎСѓС‚СЊ РёРіСЂС‹ СЃРѕСЃС‚РѕРёС‚ РІ С‚РѕРј, С‡С‚РѕР±С‹ Р·РјРµР№РєР° СЃСЉРµР»Р° ");
 	gotoxy(17, 7);
-	printf("как можно больше печенек.");
+	printf("РєР°Рє РјРѕР¶РЅРѕ Р±РѕР»СЊС€Рµ РїРµС‡РµРЅРµРє.");
 	gotoxy(17, 8);
-	printf("	При съедании определенного количества");
+	printf("	РџСЂРё СЃСЉРµРґР°РЅРёРё РѕРїСЂРµРґРµР»РµРЅРЅРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР°");
 	gotoxy(17, 9);
-	printf("печенек увеличивается уровень игры, а с ним ");
+	printf("РїРµС‡РµРЅРµРє СѓРІРµР»РёС‡РёРІР°РµС‚СЃСЏ СѓСЂРѕРІРµРЅСЊ РёРіСЂС‹, Р° СЃ РЅРёРј ");
 	gotoxy(17, 10);
-	printf("увеличивается и скорость движения змейки. ");
+	printf("СѓРІРµР»РёС‡РёРІР°РµС‚СЃСЏ Рё СЃРєРѕСЂРѕСЃС‚СЊ РґРІРёР¶РµРЅРёСЏ Р·РјРµР№РєРё. ");
 	gotoxy(17, 11);
-	printf("	Так как змея ядовитая, то при укусе самой себя ");
+	printf("	РўР°Рє РєР°Рє Р·РјРµСЏ СЏРґРѕРІРёС‚Р°СЏ, С‚Рѕ РїСЂРё СѓРєСѓСЃРµ СЃР°РјРѕР№ СЃРµР±СЏ ");
 	gotoxy(17, 12);
-	printf("она умирает (game over). Также голова змеи");
+	printf("РѕРЅР° СѓРјРёСЂР°РµС‚ (game over). РўР°РєР¶Рµ РіРѕР»РѕРІР° Р·РјРµРё");
 	gotoxy(17, 13);
-	printf("ничем не защищена и при ударе об острые");
+	printf("РЅРёС‡РµРј РЅРµ Р·Р°С‰РёС‰РµРЅР° Рё РїСЂРё СѓРґР°СЂРµ РѕР± РѕСЃС‚СЂС‹Рµ");
 	gotoxy(17, 14);
-	printf("выступы стен она умирает (game over).");
+	printf("РІС‹СЃС‚СѓРїС‹ СЃС‚РµРЅ РѕРЅР° СѓРјРёСЂР°РµС‚ (game over).");
 	gotoxy(32, 15);
-	printf("Удачи в игре!");
+	printf("РЈРґР°С‡Рё РІ РёРіСЂРµ!");
 	gotoxy(19, 18);
-	printf("Для выхода в главное меню нажмите любую ");
+	printf("Р”Р»СЏ РІС‹С…РѕРґР° РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ РЅР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ ");
 	gotoxy(28, 19);
-	printf("клавишу на клавиатуре.");
+	printf("РєР»Р°РІРёС€Сѓ РЅР° РєР»Р°РІРёР°С‚СѓСЂРµ.");
 	_getch();
 	system("cls");
 	border();
@@ -436,7 +436,7 @@ void menu(int menuPos)
 {
 	settextattr(BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 	gotoxy(FRAME_LEFT+3, FRAME_DOWN+1);
-	printf("ESC - выход из игры");
+	printf("ESC - РІС‹С…РѕРґ РёР· РёРіСЂС‹");
 	int i;
 	for (i = 0; i < MENU_SZ; i++)
 	{
@@ -454,7 +454,7 @@ void menu(int menuPos)
 		}
 		else
 		{
-			settextattr(BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY); //белый фон черные буквы
+			settextattr(BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY); //Р±РµР»С‹Р№ С„РѕРЅ С‡РµСЂРЅС‹Рµ Р±СѓРєРІС‹
 			gotoxy(30, 9 + i);
 			printf("%c", ' ');
 			gotoxy(47, 9 + i);
